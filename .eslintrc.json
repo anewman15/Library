@@ -16,7 +16,9 @@
       "eol-last": "off",
       "arrow-parens": "off",
       "indent": [2, "tab"],
-      "no-tabs": 0
+      "no-tabs": 0,
+      "no-unused-vars": "off",
+      "func-names": "off"
     },
     "ignorePatterns": [
       "dist/",
