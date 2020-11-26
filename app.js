@@ -21,13 +21,18 @@ const myLibrary = (function () {
 			}
 		}
 
+		addBookToLibrary() {
+			library.push(this);
+		}
+
+		removeBookFromLibrary(index) {
+			library.splice(index, 1);
+			return this;
+		}
+
 		static showForm() {
 			bookForm.classList.remove('hidden');
 			formButton.classList.add('hidden');
-		}
-
-		static addBookToLibrary(book) {
-			library.push(book);
 		}
 
 		static displayBooks() {
@@ -57,13 +62,14 @@ const myLibrary = (function () {
 	}
 
 	function deleteBook(index) {
-		library.splice(index, 1);
+		const book = library[index];
+		book.removeBookFromLibrary(index);
 		Book.displayBooks();
 	}
 
 	function addNewBook(title, author, pages, status) {
 		const newBook = new Book(title, author, pages, status);
-		Book.addBookToLibrary(newBook);
+		newBook.addBookToLibrary();
 		Book.displayBooks();
 	}
 
@@ -77,7 +83,7 @@ const myLibrary = (function () {
 		const status = document.querySelector('input[name=readBook]:checked').value;
 
 		const newBook = new Book(title, author, pages, status);
-		Book.addBookToLibrary(newBook);
+		newBook.addBookToLibrary();
 		Book.displayBooks();
 		bookForm.reset();
 	});
