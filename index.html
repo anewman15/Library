@@ -9,8 +9,8 @@
 <body>
     <main>
         <h1>Your Library</h1>
-        <button id="show-form-button">Add New Book</button>
-        <form id="add-book-form" class="hidden">
+        <button id="form-button">Add New Book</button>
+        <form id="book-form" class="hidden">
 
             <div class="form-data">
                 <label for="title">Title</label>
@@ -27,16 +27,26 @@
             <div class="form-data">
                 <div>
                     <label for="readTrue">Read</label>
-                    <input name="readBook" value="true" id="readTrue" type="radio" required>
+                    <input name="readBook" value="Read Already" id="readTrue" type="radio" required>
                 </div>
                 <div>
                     <label for="readFalse">Not Read</label>
-                    <input name="readBook" value="false" id="readFalse" type="radio" required>
+                    <input name="readBook" value="Not Yet Read" id="readFalse" type="radio" required>
                 </div>
             </div>
             <input type="submit" value="Add a Book" id="button">
         </form>
         <table id="books-table">
+            <thead>
+                <td>Book ID</td>
+                <td >Title</td>
+                <td>Author</td>
+                <td>Pages</td>
+                <td>Reading Status</td>
+                <td>Delete</td>
+            </thead>
+            <tbody id="books-table-rows">
+            </tbody>
         </table>
     </main>
     <script src="app.js"></script>
