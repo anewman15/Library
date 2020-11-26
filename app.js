@@ -5,12 +5,11 @@ const myLibrary = (function () {
 	const formButton = document.getElementById('form-button');
 	const bookForm = document.getElementById('book-form');
 
-	function Book(title, author, pages, status) {
-		this.title = title;
-		this.author = author;
-		this.pages = pages;
-		this.status = status;
-	}
+	const Book = function (title, author, pages, status) {
+		return {
+			title, author, pages, status,
+		};
+	};
 
 	function showForm() {
 		bookForm.classList.remove('hidden');
@@ -64,7 +63,7 @@ const myLibrary = (function () {
 		const pages = document.getElementById('pages').value;
 		const status = document.querySelector('input[name=readBook]:checked').value;
 
-		const newBook = new Book(title, author, pages, status);
+		const newBook = Book(title, author, pages, status);
 		addBookToLibrary(newBook);
 		displayBooks();
 		bookForm.reset();
