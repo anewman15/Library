@@ -20,48 +20,54 @@ const myLibrary = (function () {
 				this.status = 'Read Already';
 			}
 		}
-	}
 
-	function showForm() {
-		bookForm.classList.remove('hidden');
-		formButton.classList.add('hidden');
-	}
+		static showForm() {
+			bookForm.classList.remove('hidden');
+			formButton.classList.add('hidden');
+		}
 
-	function addBookToLibrary(book) {
-		library.push(book);
-	}
+		static addBookToLibrary(book) {
+			library.push(book);
+		}
 
-	function displayBooks() {
-		const booksList = library;
-		booksTableRows.innerHTML = '';
+		static displayBooks() {
+			const booksList = library;
+			booksTableRows.innerHTML = '';
 
-		if (booksList !== null) {
-			booksList.forEach((book, index) => {
-				const bookRow = document.createElement('tr');
-				bookRow.innerHTML = `
-					<td>${index + 1}.</td>
-					<td>${book.title}</td>
-					<td>${book.author}</td>
-					<td>${book.pages}</td>
-					<td><span class="status">${book.status}</span><button class="status-change-button" data-book-status=${index}>Change</button</td>
-					<td><button class="delete" data-book-id=${index}>Delete Book</button></td>
-				`;
-				booksTableRows.appendChild(bookRow);
-			});
+			if (booksList !== null) {
+				booksList.forEach((book, index) => {
+					const bookRow = document.createElement('tr');
+					bookRow.innerHTML = `
+						<td>${index + 1}.</td>
+						<td>${book.title}</td>
+						<td>${book.author}</td>
+						<td>${book.pages}</td>
+						<td><span class="status">${book.status}</span><button class="status-change-button" data-book-status=${index}>Change</button</td>
+						<td><button class="delete" data-book-id=${index}>Delete Book</button></td>
+					`;
+					booksTableRows.appendChild(bookRow);
+				});
+			}
 		}
 	}
 
 	function changeBookStatus(index) {
 		library[index].changeStatus();
-		displayBooks();
+		Book.displayBooks();
 	}
 
 	function deleteBook(index) {
 		library.splice(index, 1);
-		displayBooks();
+		Book.displayBooks();
 	}
 
-	formButton.addEventListener('click', showForm);
+	function addNewBook(title, author, pages, status) {
+		const newBook = new Book(title, author, pages, status);
+		Book.addBookToLibrary(newBook);
+		Book.displayBooks();
+	}
+
+	formButton.addEventListener('click', Book.showForm);
 	bookForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 
@@ -71,8 +77,8 @@ const myLibrary = (function () {
 		const status = document.querySelector('input[name=readBook]:checked').value;
 
 		const newBook = new Book(title, author, pages, status);
-		addBookToLibrary(newBook);
-		displayBooks();
+		Book.addBookToLibrary(newBook);
+		Book.displayBooks();
 		bookForm.reset();
 	});
 
@@ -87,12 +93,6 @@ const myLibrary = (function () {
 			changeBookStatus(bookStatusId);
 		}
 	});
-
-	function addNewBook(title, author, pages, status) {
-		const newBook = new Book(title, author, pages, status);
-		addBookToLibrary(newBook);
-		displayBooks();
-	}
 
 	return { addNewBook, changeBookStatus, deleteBook };
 }());
